@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Novo Empréstimo</title>
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f2f4f7;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    form div {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    select, input[type="date"] {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    select:focus, input[type="date"]:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    span {
+      color: red;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #007bff;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<h1>Novo Empréstimo</h1>
+<form th:action="@{/emprestimos/salvar}" th:object="${emprestimo}" method="post">
+  <div>
+    <label>Livro (disponíveis):</label>
+    <select th:field="*{livro.id}">
+      <option th:each="l : ${livros}" th:value="${l.id}" th:text="${l.titulo}">Livro</option>
+    </select>
+  </div>
+  <div>
+    <label>Usuário:</label>
+    <select th:field="*{usuario.id}">
+      <option th:each="u:${usuarios}" th:value="${u.id}" th:text="${u.nome}">Usuário</option>
+    </select>
+  </div>
+  <div>
+    <label>Data Retirada:</label>
+    <input th:field="*{dataRetirada}" type="date" />
+  </div>
+  <div>
+    <label>Data Prevista Devolução:</label>
+    <input th:field="*{dataPrevistaDevolucao}" type="date" />
+    <span th:if="${#fields.hasErrors('dataPrevistaDevolucao')}" th:errors="*{dataPrevistaDevolucao}"></span>
+  </div>
+  <button type="submit">Salvar</button>
+</form>
+<a th:href="@{/emprestimos}">Voltar</a>
+</body>
+</html>

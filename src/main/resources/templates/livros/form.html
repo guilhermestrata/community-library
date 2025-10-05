@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Livro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f2f4f7;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    form div {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    span {
+      color: red;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #007bff;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<h1 th:text="${livro.id} != null ? 'Editar Livro' : 'Novo Livro'">Livro</h1>
+<br>
+<form th:action="@{/livros/salvar}" th:object="${livro}" method="post">
+  <input type="hidden" th:field="*{id}" />
+  <div>
+    <label>Título:</label>
+    <input th:field="*{titulo}" />
+    <span th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></span>
+  </div>
+  <div>
+    <label>Autor:</label>
+    <input th:field="*{autor}" />
+  </div>
+  <div>
+    <label>Ano Publicação:</label>
+    <input th:field="*{anoPublicacao}" type="number" />
+  </div>
+  <button type="submit">Salvar</button>
+</form>
+<a th:href="@{/livros}">Voltar</a>
+</body>
+</html>
